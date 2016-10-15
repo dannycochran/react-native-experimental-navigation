@@ -53,6 +53,7 @@ function applyDefaultAnimation(
   Animated.spring(
     position,
     {
+      useNativeDriver: true,
       bounciness: 0,
       toValue: navigationState.index,
     }
@@ -228,8 +229,14 @@ class NavigationAnimatedView
       isMeasured: true,
     };
 
-    layout.height.setValue(height);
-    layout.width.setValue(width);
+    Animated.event([{
+      nativeEvent: {
+        layout: {
+          height: height,
+          width: width,
+        },
+      },
+    }]);
 
     this.setState({ layout });
   }
